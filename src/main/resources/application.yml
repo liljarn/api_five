@@ -5,9 +5,9 @@ spring:
     hibernate:
       ddl-auto: validate
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres
-    username: postgres
-    password: postgres
+    url: jdbc:postgresql://postgre:RnwL6dYs3cf8mjaVfwWKQSSYyPvhadjI@dpg-cs8hs05umphs7387psv0-a/postgre_979k
+    username: postgre
+    password: RnwL6dYs3cf8mjaVfwWKQSSYyPvhadjI
     driverClassName: org.postgresql.Driver
   flyway:
     enabled: true
