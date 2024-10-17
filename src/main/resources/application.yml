@@ -10,7 +10,7 @@ spring:
     password: RnwL6dYs3cf8mjaVfwWKQSSYyPvhadjI
     driverClassName: org.postgresql.Driver
   flyway:
-    enabled: true
+    enabled: false
     validate-on-migrate: true
 
 springdoc:
