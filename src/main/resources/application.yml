@@ -12,3 +12,9 @@ spring:
   flyway:
     enabled: true
     validate-on-migrate: true
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui
+  api-docs:
+    path: /doc

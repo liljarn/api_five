@@ -47,9 +47,10 @@ public class QuoteService {
             Quote quote = quoteRepository.findByQuoteKey(key).orElseThrow(RuntimeException::new).toQuote();
             quoteCache.put(quote.quoteKey(), new CachedQuote(quote, LocalDateTime.now()));
             return quote;
+        } else {
+            quoteCache.put(cachedQuote.quote().quoteKey(), new CachedQuote(cachedQuote.quote(), LocalDateTime.now()));
+            return cachedQuote.quote();
         }
-
-        return cachedQuote.quote();
     }
 
     @Transactional(readOnly = true)
@@ -94,7 +95,7 @@ public class QuoteService {
         newQuote.setQuote(request.quote());
         newQuote.setTheme(themeEntity);
 
-        themeEntity.getQuotes().add(newQuote);
+        themeEntity.addQuote(newQuote);
 
         themeRepository.save(themeEntity);
 
@@ -104,8 +105,16 @@ public class QuoteService {
     @Transactional
     public Quote deleteQuote(String key) {
         quoteCache.remove(key);
-        QuoteEntity entity = quoteRepository.findByQuoteKey(key).orElseThrow(RuntimeException::new);
+        QuoteEntity entity = quoteRepository.findByQuoteKey(key).orElseThrow(() -> new RuntimeException("Цитата не найдена"));
+        ThemeEntity theme = entity.getTheme();
+
         quoteRepository.delete(entity);
+
+        theme.getQuotes().remove(entity);
+
+        if (theme.getQuotes().isEmpty()) {
+            themeRepository.delete(theme);
+        }
 
         return entity.toQuote();
     }
