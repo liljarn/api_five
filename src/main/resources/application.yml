@@ -1,18 +1,3 @@
-spring:
-  jpa:
-    database: POSTGRESQL
-    show-sql: false
-    hibernate:
-      ddl-auto: validate
-  datasource:
-    url: jdbc:postgresql://postgre:RnwL6dYs3cf8mjaVfwWKQSSYyPvhadjI@dpg-cs8hs05umphs7387psv0-a:5432/postgre_979k
-    username: postgre
-    password: RnwL6dYs3cf8mjaVfwWKQSSYyPvhadjI
-    driverClassName: org.postgresql.Driver
-  flyway:
-    enabled: false
-    validate-on-migrate: true
-
 springdoc:
   swagger-ui:
     path: /swagger-ui

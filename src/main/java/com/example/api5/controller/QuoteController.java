@@ -3,6 +3,7 @@ package com.example.api5.controller;
 import com.example.api5.model.AddQuoteRequest;
 import com.example.api5.model.Quote;
 import com.example.api5.model.QuoteWithTheme;
+import com.example.api5.model.ThemeKeys;
 import com.example.api5.service.QuoteService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -24,9 +25,11 @@ public class QuoteController {
     @GetMapping("/quote")
     public Quote getQuoteByKey(
             @Parameter(name = "key", description = "Ключ искомой цитаты", in = ParameterIn.QUERY)
-            @RequestParam String key
+            @RequestParam String key,
+            @Parameter(name = "theme", description = "Тема искомой цитаты", in = ParameterIn.QUERY)
+            @RequestParam String theme
     ) {
-        return quoteService.getQuote(key);
+        return quoteService.getQuote(key, theme);
     }
 
     @Operation(operationId = "getQuotes", summary = "Получить список всех цитат по темам")
@@ -37,7 +40,7 @@ public class QuoteController {
 
     @Operation(operationId = "getQuoteKeys", summary = "Получить список всех ключей цитат")
     @GetMapping("/keys")
-    public List<String> getQuoteKeys() {
+    public List<ThemeKeys> getQuoteKeys() {
         return quoteService.getQuoteKeys();
     }
 
@@ -58,13 +61,13 @@ public class QuoteController {
 
     @Operation(operationId = "addQuote", summary = "Добавить цитату")
     @PostMapping("/quote")
-    public Quote addQuote(@RequestBody AddQuoteRequest request) {
-        return quoteService.addQuote(request);
+    public void addQuote(@RequestBody AddQuoteRequest request) {
+         quoteService.addQuote(request);
     }
 
     @Operation(operationId = "deleteQuote", summary = "Удалить цитату")
     @DeleteMapping("/quote")
-    public Quote deleteQuote(@RequestParam String key) {
-        return quoteService.deleteQuote(key);
+    public void deleteQuote(@RequestParam String key, @RequestParam String theme) {
+        quoteService.deleteQuote(key, theme);
     }
 }
